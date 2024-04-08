@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+
+        <!-- Style -->
+        <link rel="stylesheet" href="./style/bulma.min.css" />
+        <!-- <link rel="stylesheet" href="./style/bulma-switch.min.css" /> -->
+        <!-- Script -->
+        <script src="./script/vue.global.js"></script>
+    </head>
+    <body>
+        <!-- Root Component -->
+        <div id="app">
+
+            <div class="container">
+                <h1 class="title">My Works</h1>
+
+                <div class="buttons">
+                    <button class="button is-small" v-for="check in checks" :class="getCheckClass(check)" @click="toggleCheck(check)">
+                        {{ check.name }}
+                    </button>
+                </div>
+            </div>
+
+            <p class="mb-4"></p>
+
+            <div class="container">
+                <div class="grid is-col-min-12">
+
+                    <!-- cell -->
+                    <div class="cell" v-for="item in items">
+                        <!-- card -->
+                        <div class="card">
+                            <div class="card-image">
+                                <figure class="image is-4by3">
+                                    <a :href="item.url" target="_blank">
+                                        <img :src="getImageURL(item)" :alt="item.name"/>
+                                    </a>
+                                </figure>
+                            </div>
+                            <div class="card-content">
+                                <div class="media">
+                                    <div class="media-content">
+                                        <p class="title is-4">
+                                            <a :href="item.url" target="_blank">{{ item.name }}</a>
+                                        </p>
+                                        <!-- <p class="subtitle is-6"></p> -->
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <span class="tag" :class="getTagClass(item)">{{ item.type }}</span>
+                                    <span>{{ item.description }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /card -->
+                    </div>
+                    <!-- /cell -->
+                </div>
+
+            </div>
+
+        </div>
+    </body>
+</html>
+
+
+<style>
+    .card .card-image img {
+        object-fit: cover;
+    }
+</style>
+
+<script>
+    const _items = [
+        {
+            type: "Site",  name: "GitHub | Repositories",
+            image: "https://avatars.githubusercontent.com/u/3981419?v=4",
+            url: "https://github.com/yamahei?tab=repositories",
+            description: "description1"
+        },
+        {
+            type: "App",  name: "Polish Calculator",
+            image: "https://raw.githubusercontent.com/yamahei/polish/main/img/tree-min.png",
+            url: "https://github.com/yamahei/polish",
+            description: "description3"
+        },
+        {
+            type: "App",  name: "Ore-Ore Language",
+            image: "https://raw.githubusercontent.com/yamahei/orelang/main/img/screen-min.png",
+            url: "https://github.com/yamahei/orelang",
+            description: "description3"
+        },
+        {
+            type: "App",  name: "Bit Weather",
+            image: "https://yamahei.github.io/bitweather/img/logo.png",
+            url: "https://github.com/yamahei/bitweather",
+            description: "description1" },
+        {
+            type: "Game", name: "Tap Runner",
+            image: "https://yamahei.github.io/phina_samples/ASSETS/image/other/image.png",
+            url: "https://yamahei.github.io/phina_samples/taprunner.doc.html",
+            description: "description2"
+        },
+        {
+            type: "Game", name: "Flip!",
+            image: "https://raw.githubusercontent.com/yamahei/enchant_flip/main/promote/commercial_image1024x500.png",
+            url: "https://yamahei.github.io/enchant_flip/",
+            description: "description3"
+        },
+        {
+            type: "Game", name: "Moriy",
+            image: "https://raw.githubusercontent.com/yamahei/enchant_moriy/main/promote/titleimage_moriy.png",
+            url: "https://yamahei.github.io/enchant_moriy/",
+            description: "description3"
+        },
+        {
+            type: "Game", name: "Astro Bear",
+            image: "https://yamahei.github.io/enchant_astrobear/promote/ISS_Bear512.png",
+            url: "https://yamahei.github.io/enchant_astrobear/",
+            description: "description3"
+        },
+        {
+            type: "Book", name: "Thief Rabbit",
+            image: "https://yamahei.github.io/thief_rabbit/image/210825_2231_001-min.jpg",
+            url: "https://yamahei.github.io/thief_rabbit/index.v3.html",
+            description: "description3"
+        },
+        {
+            type: "App",  name: "花火だより",
+            url: "https://yamahei.github.io/fireworks/",
+            description: "description3"
+        },
+        {
+            type: "App",  name: "帰省人",
+            url: "https://kisejin-aa27gkw5ha-uc.a.run.app/index.html",
+            description: "description3"
+        },
+        {
+            type: "Shop", name: "LINE STORE | 行間を彩る無言の動物スタンプ",
+            image: "https://stickershop.line-scdn.net/stickershop/v1/product/1371429/LINEStorePC/main.png?v=1",
+            url: "https://store.line.me/stickershop/product/1371429/ja",
+            description: "description3"
+        },
+        {
+            type: "Book", name: "処刑人ボンゴレ",
+            url: "https://www.pixiv.net/users/15673720/manga/%E5%87%A6%E5%88%91%E4%BA%BA%E3%83%9C%E3%83%B3%E3%82%B4%E3%83%AC",
+            description: "description3"
+        },
+        {
+            type: "Shop", name: "LINE STORE | 処刑ボンゴレのコマ",
+            image: "https://stickershop.line-scdn.net/stickershop/v1/product/1390402/LINEStorePC/main.png?v=1",
+            url: "https://store.line.me/stickershop/product/1390402/ja",
+            description: "description3"
+        },
+        {
+            type: "Book", name: "Les Animaux tels qu'ils sont: かたちで描く、どうぶつイラスト",
+            image: "https://m.media-amazon.com/images/I/81skUP7YsaL._SY466_.jpg",
+            url: "https://www.amazon.co.jp/dp/4815012970?tag=myisbn-22",
+            description: "description3"
+        },
+        {
+            type: "App",  name: "Jiho",
+            url: "https://github.com/yamahei/jiho",
+            description: "description3"
+        },
+        {
+            type: "Shop", name: "akaneya",
+            image: "https://dzdih2euft5nz.cloudfront.net/users/avatars/182013.png?1510578644",
+            url: "https://suzuri.jp/yamahei",
+            description: "description3"
+        },
+        {
+            type: "Book", name: "家族ではじめるオリジナルグッズライフ～子どもの作品が彩る暮らし～",
+            image: "https://m.media-amazon.com/images/I/61WJP+RgNrL._SY342_.jpg",
+            url: "https://www.amazon.co.jp/gp/product/B09L9RX7V4",
+            description: "description3"
+        },
+        {
+            type: "Book", name: "中小SES企業SEの素晴らしき日々",
+            image: "https://m.media-amazon.com/images/I/719VgPhot3L._SY342_.jpg",
+            url: "https://www.amazon.co.jp/dp/B0CQW4GMVY",
+            description: "description3"
+        },
+        {
+            type: "Site", name: "山平エンジニアリング",
+            url: "https://www.yamaheieng.com/",
+            description: "description3"
+        },
+    ];
+
+    const { createApp } = Vue;
+    const app = createApp({
+        data(){
+            const items = _items.concat();
+            const classes = {
+                Site: "is-info",
+                App: "is-danger",
+                Game: "is-warning",
+                Book: "is-success",
+                Shop: "is-primary",
+            };
+            const checks = Object.keys(classes).map(klass => { return { name: klass, checked: true }});
+            console.log(checks);
+            return { items, classes, checks };
+        },
+        methods: {
+            getImageURL(item){
+                return item.image || `https://placehold.jp/c0c0c0/808080/150x150.png?text=${item.name}`;
+            },
+            getTagClass(item){
+                return this.classes[item.type];
+            },
+            getCheckClass(check){
+                return [
+                    this.classes[check.name],
+                    check.checked ? "" : "is-outlined"
+                ].join(" ");
+            },
+            toggleCheck(check){
+                check.checked = !check.checked;
+                this.filter();
+            },
+            filter(){
+                const _checks = this.checks;
+                this.items = _items.filter(item => {
+                    const check = _checks.find(c => c.name == item.type);
+                    return check?.checked;
+                });
+            },
+        },
+    });
+    app.mount('#app');
+</script>
+
