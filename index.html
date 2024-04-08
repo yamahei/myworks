@@ -76,6 +76,13 @@
 </style>
 
 <script>
+    const classes = {
+        Site: "is-info",
+        App: "is-danger",
+        Game: "is-warning",
+        Book: "is-success",
+        Shop: "is-primary",
+    };
     const _items = [
         {
             type: "Site",  name: "GitHub | Repositories",
@@ -137,6 +144,7 @@
         },
         {
             type: "App",  name: "帰省人",
+            image: "./image/kisejin.png",
             url: "https://kisejin-aa27gkw5ha-uc.a.run.app/index.html",
             description: "description3"
         },
@@ -148,6 +156,7 @@
         },
         {
             type: "Book", name: "処刑人ボンゴレ",
+            image: "./image/vongore_v8_p19.png",
             url: "https://www.pixiv.net/users/15673720/manga/%E5%87%A6%E5%88%91%E4%BA%BA%E3%83%9C%E3%83%B3%E3%82%B4%E3%83%AC",
             description: "description3"
         },
@@ -196,14 +205,7 @@
     const { createApp } = Vue;
     const app = createApp({
         data(){
-            const items = _items.concat();
-            const classes = {
-                Site: "is-info",
-                App: "is-danger",
-                Game: "is-warning",
-                Book: "is-success",
-                Shop: "is-primary",
-            };
+            const items = _items.concat().sort( () => Math.random() - 0.5);
             const checks = Object.keys(classes).map(klass => { return { name: klass, checked: true }});
             console.log(checks);
             return { items, classes, checks };
@@ -230,7 +232,7 @@
                 this.items = _items.filter(item => {
                     const check = _checks.find(c => c.name == item.type);
                     return check?.checked;
-                });
+                }).sort( () => Math.random() - 0.5);
             },
         },
     });
